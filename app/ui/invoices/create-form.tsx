@@ -1,19 +1,31 @@
 "use client";
-import { useFormState } from 'react-dom';
-import { CustomerField } from "@/app/lib/definitions";
-import Link from "next/link";
+
 import {
   CheckIcon,
   ClockIcon,
   CurrencyDollarIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/outline";
-import { Button } from "../button";
-import { createInvoice } from "@/app/lib/actions";
+import { type Metadata } from "next";
+import { useFormState } from "react-dom";
 
-export default function Form({ customers }: { customers: CustomerField[] }) {
-    const [state, dispatch] = useFormState(createInvoice, initialState);
- 
+import Link from "next/link";
+
+import { createInvoice } from "@/app/lib/actions";
+import { type CustomerField } from "@/app/lib/definitions";
+import { Button } from "@/app/ui/button";
+
+export const metadata: Metadata = {
+  title: "Create Invoice | Acme Dashboard",
+};
+
+export default function CreateForm({
+  customers,
+}: {
+  readonly customers: CustomerField[];
+}) {
+  const initialState = { message: null, errors: {} }
+  const [state, dispatch] = useFormState(createInvoice, initialState);
   return(
   <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
